@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Launch (web)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/NZwalks.API/bin/Debug/net8.0/NZwalks.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/NZwalks.API",
+      "console": "integratedTerminal",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
