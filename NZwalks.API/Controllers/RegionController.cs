@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.MODELS.DOMAIN;
 using NZWalks.API.MODELS.DTOs;
@@ -10,10 +11,12 @@ namespace NZwalks.API.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly IRegionRepository regionRepository;
+        private readonly IMapper mapper;
 
-        public RegionsController(IRegionRepository regionRepository)
+        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
         {
             this.regionRepository = regionRepository;
+            this.mapper = mapper;
         }
 
         // GET: https://localhost:xxxx/api/regions
@@ -22,13 +25,7 @@ namespace NZwalks.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var regions = await regionRepository.GetAllAsync();
-            var regionsDto = regions.Select(region => new RegionDto
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageUrl = region.RegionImageUrl
-            }).ToList();
+            var regionsDto = mapper.Map<List<RegionDto>>(regions);
 
             return Ok(regionsDto);
         }
@@ -54,13 +51,7 @@ namespace NZwalks.API.Controllers
                 return NotFound(problemDetails);
             }
 
-            var regionDto = new RegionDto
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageUrl = region.RegionImageUrl
-            };
+            var regionDto = mapper.Map<RegionDto>(region);
 
             return Ok(regionDto);
         }
@@ -85,23 +76,12 @@ namespace NZwalks.API.Controllers
                 });
             }
 
-            var region = new Region
-            {
-                Id = Guid.NewGuid(),
-                Code = addRegionRequestDto.Code,
-                Name = addRegionRequestDto.Name,
-                RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            };
+            var region = mapper.Map<Region>(addRegionRequestDto);
+            region.Id = Guid.NewGuid();
 
             region = await regionRepository.CreateAsync(region);
 
-            var regionDto = new RegionDto
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageUrl = region.RegionImageUrl
-            };
+            var regionDto = mapper.Map<RegionDto>(region);
 
             return CreatedAtAction(nameof(GetById), new { id = region.Id }, regionDto);
         }
@@ -116,12 +96,7 @@ namespace NZwalks.API.Controllers
                 return BadRequest();
             }
 
-            var regionDomainModel = new Region
-            {
-                Code = updateRegionRequestDto.Code,
-                Name = updateRegionRequestDto.Name,
-                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
-            };
+            var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
 
             var region = await regionRepository.UpdateAsync(id, regionDomainModel);
 
@@ -138,13 +113,7 @@ namespace NZwalks.API.Controllers
                 return NotFound(problemDetails);
             }
 
-            var regionDto = new RegionDto
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageUrl = region.RegionImageUrl
-            };
+            var regionDto = mapper.Map<RegionDto>(region);
 
             return Ok(regionDto);
         }
@@ -170,13 +139,7 @@ namespace NZwalks.API.Controllers
                 return NotFound(problemDetails);
             }
 
-            var regionDto = new RegionDto
-            {
-                Id = region.Id,
-                Code = region.Code,
-                Name = region.Name,
-                RegionImageUrl = region.RegionImageUrl
-            };
+            var regionDto = mapper.Map<RegionDto>(region);
 
             return Ok(regionDto);
         }
