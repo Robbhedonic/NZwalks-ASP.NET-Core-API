@@ -4,7 +4,11 @@ namespace NZWalks.API.Repositories
 {
     public interface IWalkRepository
     {
-        Task<List<Walks>> GetAllAsync();
+        Task<List<Walks>> GetAllAsync(
+            string? filterOn = null,
+            string? filterQuery = null,
+            string? sortBy = null,
+            bool isAscending = true);
         Task<Walks?> GetByIdAsync(Guid id);
         Task<Walks?> UpdateAsync(Guid id, Walks walk);
         Task<Walks?> DeleteAsync(Guid id);
