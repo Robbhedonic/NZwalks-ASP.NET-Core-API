@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NZwalks.API.CustomActionFilters;
 using NZWalks.API.MODELS.DOMAIN;
 using NZWalks.API.MODELS.DTOs;
 using NZWalks.API.Repositories;
@@ -58,15 +59,11 @@ namespace NZwalks.API.Controllers
 
         // POST: https://localhost:xxxx/api/regions
         [HttpPost]
+        [ValidateModel]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var region = mapper.Map<Region>(addRegionRequestDto);
             region.Id = Guid.NewGuid();
 
@@ -78,15 +75,11 @@ namespace NZwalks.API.Controllers
         }
         // PUT: https://localhost:xxxx/api/regions/{id}
         [HttpPut("{id:Guid}")]
+        [ValidateModel]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
 
             var region = await regionRepository.UpdateAsync(id, regionDomainModel);
