@@ -19,6 +19,14 @@ namespace NZwalks.API.Controllers
             this.walkRepository = walkRepository;
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(List<WalkDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var walksDomainModel = await walkRepository.GetAllAsync();
+            return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
