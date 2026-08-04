@@ -17,6 +17,7 @@ builder.Services.AddDbContext<NZWalksDBContext>(options =>
 });
 
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 builder.Services.AddSingleton<IMapper>(_ =>
 {
     var config = new MapperConfiguration(cfg =>
