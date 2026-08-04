@@ -70,5 +70,20 @@ namespace NZwalks.API.Controllers
 
             return Ok(mapper.Map<WalkDto>(walkDomainModel));
         }
+
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deletedWalkDomainModel = await walkRepository.DeleteAsync(id);
+
+            if (deletedWalkDomainModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mapper.Map<WalkDto>(deletedWalkDomainModel));
+        }
     }
 }
