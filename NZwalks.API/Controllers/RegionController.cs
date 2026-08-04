@@ -62,18 +62,9 @@ namespace NZwalks.API.Controllers
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            if (addRegionRequestDto == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
-            }
-
-            if (string.IsNullOrWhiteSpace(addRegionRequestDto.Code) || string.IsNullOrWhiteSpace(addRegionRequestDto.Name))
-            {
-                return ValidationProblem(new ValidationProblemDetails
-                {
-                    Title = "Invalid region",
-                    Detail = "Code and Name are required."
-                });
+                return BadRequest(ModelState);
             }
 
             var region = mapper.Map<Region>(addRegionRequestDto);
@@ -91,9 +82,9 @@ namespace NZwalks.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
-            if (updateRegionRequestDto == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);

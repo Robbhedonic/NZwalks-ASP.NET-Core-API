@@ -46,6 +46,11 @@ namespace NZwalks.API.Controllers
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var walkDomainModel = mapper.Map<Walks>(addWalkRequestDto);
             walkDomainModel.Id = Guid.NewGuid();
 
@@ -59,6 +64,11 @@ namespace NZwalks.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var walkDomainModel = mapper.Map<Walks>(updateWalkRequestDto);
 
             walkDomainModel = await walkRepository.UpdateAsync(id, walkDomainModel);
