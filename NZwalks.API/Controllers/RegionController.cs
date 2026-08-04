@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZwalks.API.CustomActionFilters;
 using NZWalks.API.MODELS.DOMAIN;
@@ -22,6 +23,7 @@ namespace NZwalks.API.Controllers
 
         // GET: https://localhost:xxxx/api/regions
         [HttpGet]
+        [Authorize(Policy = "ReadOnly")]
         [ProducesResponseType(typeof(List<RegionDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
@@ -33,6 +35,7 @@ namespace NZwalks.API.Controllers
 
         // GET: https://localhost:xxxx/api/regions/{id}
         [HttpGet("{id:Guid}")]
+        [Authorize(Policy = "ReadOnly")]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
@@ -59,6 +62,7 @@ namespace NZwalks.API.Controllers
 
         // POST: https://localhost:xxxx/api/regions
         [HttpPost]
+        [Authorize(Policy = "ReadWrite")]
         [ValidateModel]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -75,6 +79,7 @@ namespace NZwalks.API.Controllers
         }
         // PUT: https://localhost:xxxx/api/regions/{id}
         [HttpPut("{id:Guid}")]
+        [Authorize(Policy = "ReadWrite")]
         [ValidateModel]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
@@ -104,6 +109,7 @@ namespace NZwalks.API.Controllers
 
         // DELETE: https://localhost:xxxx/api/regions/{id}
         [HttpDelete("{id:Guid}")]
+        [Authorize(Policy = "ReadWrite")]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)

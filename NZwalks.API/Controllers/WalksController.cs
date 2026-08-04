@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZwalks.API.CustomActionFilters;
 using NZWalks.API.MODELS.DOMAIN;
@@ -21,6 +22,7 @@ namespace NZwalks.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "ReadOnly")]
         [ProducesResponseType(typeof(List<WalkDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             [FromQuery] string? filterOn,
@@ -38,6 +40,7 @@ namespace NZwalks.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [Authorize(Policy = "ReadOnly")]
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
@@ -53,6 +56,7 @@ namespace NZwalks.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "ReadWrite")]
         [ValidateModel]
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
@@ -66,6 +70,7 @@ namespace NZwalks.API.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [Authorize(Policy = "ReadWrite")]
         [ValidateModel]
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,6 +89,7 @@ namespace NZwalks.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Policy = "ReadWrite")]
         [ProducesResponseType(typeof(WalkDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)

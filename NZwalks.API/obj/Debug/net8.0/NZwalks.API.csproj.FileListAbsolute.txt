@@ -142,3 +142,4 @@
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/System.Diagnostics.DiagnosticSource.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
