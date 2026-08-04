@@ -17,7 +17,9 @@ namespace NZWalks.API.Repositories
             string? filterOn = null,
             string? filterQuery = null,
             string? sortBy = null,
-            bool isAscending = true)
+            bool isAscending = true,
+            int pageNumber = 1,
+            int pageSize = 1000)
         {
             var walks = dbContext.Walks
                 .Include("Difficulty")
@@ -51,6 +53,9 @@ namespace NZWalks.API.Repositories
                         : walks.OrderByDescending(x => x.LengthInKM);
                 }
             }
+
+            var skipResults = (pageNumber - 1) * pageSize;
+            walks = walks.Skip(skipResults).Take(pageSize);
 
             return await walks.ToListAsync();
         }

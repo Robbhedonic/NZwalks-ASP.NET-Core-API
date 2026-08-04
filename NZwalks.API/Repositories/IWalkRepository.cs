@@ -8,7 +8,9 @@ namespace NZWalks.API.Repositories
             string? filterOn = null,
             string? filterQuery = null,
             string? sortBy = null,
-            bool isAscending = true);
+            bool isAscending = true,
+            int pageNumber = 1,
+            int pageSize = 1000);
         Task<Walks?> GetByIdAsync(Guid id);
         Task<Walks?> UpdateAsync(Guid id, Walks walk);
         Task<Walks?> DeleteAsync(Guid id);
