@@ -143,3 +143,8 @@
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/System.Diagnostics.DiagnosticSource.dll
 /Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
+/Users/rc/NZwalks/NZwalks.API/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
