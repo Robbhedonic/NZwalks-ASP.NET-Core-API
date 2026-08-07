@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NZWalks.API.MODELS.DOMAIN;
 using NZWalks.API.MODELS.DTOs;
-using NZWalks.API.Repositories;
 
 namespace NZwalks.API.Controllers
 {
@@ -11,12 +9,10 @@ namespace NZwalks.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ITokenRepository tokenRepository;
         private readonly UserManager<IdentityUser> userManager;
 
-        public AuthController(ITokenRepository tokenRepository, UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<IdentityUser> userManager)
         {
-            this.tokenRepository = tokenRepository;
             this.userManager = userManager;
         }
 
@@ -54,43 +50,23 @@ namespace NZwalks.API.Controllers
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] LoginRequestDto loginRequestDto)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
-            var users = new List<User>
-            {
-                new User
-                {
-                    Id = Guid.NewGuid(),
-                    Username = "reader@nzwalks.com",
-                    Password = "Reader@123",
-                    Roles = new List<string> { "Reader" }
-                },
-                new User
-                {
-                    Id = Guid.NewGuid(),
-                    Username = "writer@nzwalks.com",
-                    Password = "Writer@123",
-                    Roles = new List<string> { "Writer" }
-                }
-            };
-
-            var user = users.FirstOrDefault(x =>
-                x.Username.Equals(loginRequestDto.Username, StringComparison.OrdinalIgnoreCase)
-                && x.Password == loginRequestDto.Password);
+            var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
 
             if (user == null)
             {
-                return Unauthorized();
+                return BadRequest("Username or Password incorrect");
             }
 
-            var jwtToken = tokenRepository.CreateJWTToken(user);
+            var checkPasswordResult = await userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
-            var response = new LoginResponseDto
+            if (!checkPasswordResult)
             {
-                JwtToken = jwtToken
-            };
+                return BadRequest("Username or Password incorrect");
+            }
 
-            return Ok(response);
+            return Ok();
         }
     }
 }
