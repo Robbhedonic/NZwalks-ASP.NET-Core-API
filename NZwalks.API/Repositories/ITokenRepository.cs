@@ -1,9 +1,9 @@
-using NZWalks.API.MODELS.DOMAIN;
+using Microsoft.AspNetCore.Identity;
 
 namespace NZWalks.API.Repositories
 {
     public interface ITokenRepository
     {
-        string CreateJWTToken(User user);
+        string CreateJWTToken(IdentityUser user, List<string> roles);
     }
 }
