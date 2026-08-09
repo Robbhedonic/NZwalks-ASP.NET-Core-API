@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NZwalks.API.models
+namespace NZWalks.API.MODELS.DOMAIN
 {
     public class Image
     {
