@@ -4527,7 +4527,7 @@
     ]
   },
   "packageFolders": {
-    "/tmp/nuget-packages": {}
+    "/Users/rc/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4535,11 +4535,11 @@
       "projectUniqueName": "/Users/rc/NZwalks/NZwalks.API/NZwalks.API.csproj",
       "projectName": "NZwalks.API",
       "projectPath": "/Users/rc/NZwalks/NZwalks.API/NZwalks.API.csproj",
-      "packagesPath": "/tmp/nuget-packages",
+      "packagesPath": "/Users/rc/.nuget/packages/",
       "outputPath": "/Users/rc/NZwalks/NZwalks.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/tmp/nuget.config"
+        "/Users/rc/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
