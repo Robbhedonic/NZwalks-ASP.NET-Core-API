@@ -9,7 +9,9 @@ using NZWalks.API.Repositories;
 namespace NZwalks.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class RegionsController : ControllerBase
     {
         private readonly IRegionRepository regionRepository;
@@ -23,6 +25,7 @@ namespace NZwalks.API.Controllers
 
         // GET: https://localhost:xxxx/api/regions
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [Authorize(Roles = "Reader")]
         [ProducesResponseType(typeof(List<RegionDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
@@ -33,8 +36,25 @@ namespace NZwalks.API.Controllers
             return Ok(regionsDto);
         }
 
+        [HttpGet]
+        [MapToApiVersion("2.0")]
+        [Authorize(Roles = "Reader")]
+        [ProducesResponseType(typeof(List<RegionV2Dto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllV2()
+        {
+            var regions = await regionRepository.GetAllAsync();
+            var regionsDto = regions.Select(x => new RegionV2Dto
+            {
+                Id = x.Id,
+                CountryName = x.Name
+            }).ToList();
+
+            return Ok(regionsDto);
+        }
+
         // GET: https://localhost:xxxx/api/regions/{id}
         [HttpGet("{id:Guid}")]
+        [MapToApiVersion("1.0")]
         [Authorize(Roles = "Reader")]
         [ProducesResponseType(typeof(RegionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
