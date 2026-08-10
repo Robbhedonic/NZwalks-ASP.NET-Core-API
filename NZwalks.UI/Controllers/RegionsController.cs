@@ -17,7 +17,7 @@ namespace NZwalks.UI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7244/api/regions");
+            var response = await client.GetAsync("http://127.0.0.1:5150/api/regions");
 
             response.EnsureSuccessStatusCode();
 
@@ -36,7 +36,7 @@ namespace NZwalks.UI.Controllers
         public async Task<IActionResult> Add(AddRegionViewModel model)
         {
             var client = _httpClientFactory.CreateClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7244/api/regions");
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://127.0.0.1:5150/api/regions");
 
             request.Content = new StringContent(
                 JsonSerializer.Serialize(model),
